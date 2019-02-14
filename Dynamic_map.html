@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title></title>
+    <link rel="stylesheet" href="https://js.arcgis.com/3.27/esri/css/esri.css">
+    <script src="https://js.arcgis.com/3.27/"></script>
+    <style>
+      html, body, #map {
+      height: 100%;
+      padding: 0;
+      margin: 0;
+      }
+</style>
+
+<script>
+  var modulos = ["esri/map", "esri/geometry/Extent", "esri/SpatialReference", "esri/layers/ArcGISDynamicMapServiceLayer", "esri/layers/FeatureLayer", "dojo/domReady!"];
+  var map;
+  var callback = function(Map, Extent, SpatialReference, ArcGISDynamicMapServiceLayer, FeatureLayer) {
+
+      var extent = new Extent(-1886728.6856060084,5633233.268580584,1234348.0533334785,8793445.766002072, new SpatialReference({ wkid:3857}));
+
+      map = new Map ("map", {
+          basemap: "satellite",
+          extent: extent});
+
+      var urlDynMap = "https://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Demographics/ESRI_Population_World/MapServer";
+
+      var census = new ArcGISDynamicMapServiceLayer(urlDynMap);
+
+      var urlFL = ("https://services1.arcgis.com/BjgJYiFmZRQK0RiM/arcgis/rest/services/Openflight_Airports/FeatureServer/0/");
+      var lyr = new FeatureLayer(urlFL);
+
+  lyr.setDefinitionExpression("Country = 'United Kingdom'")
+
+     map.addLayer(census);
+     map.addLayer(lyr);
+
+
+  };
+
+  require (modulos, callback);
+</script>
+  </head>
+  <body class="claro">
+    <div id="map"></div>
+</body>
+</html>
