@@ -35,9 +35,7 @@
                 zoom: 13
             });
 
-            var symbol = new PictureMarkerSymbol(obj);
-
-            graphic = new Graphic(new Point(-122.45, 37.75), symbol)
+            graphic = new Graphic(obj)
 
             map.on("load",function(){
                 map.graphics.add(graphic);
